@@ -18,8 +18,8 @@ def getFieldsModules():
 
 
 @app.route('/userInfo.get/<int:user_id>', methods=["GET"])
-def getUser():
-    return getProfileInfo()
+def getUser(user_id):
+    return getProfileInfo(user_id)
 
 
 if __name__ == "__main__":
