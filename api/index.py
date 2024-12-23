@@ -12,5 +12,5 @@ def about():
 
 
 @app.route('/fields-modules.get')
-def about():
+def getData():
     return get_files()
