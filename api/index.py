@@ -33,8 +33,8 @@ def signup():
         full_name = data.get("full_name")
         email = data.get("email")
         password = data.get("password")
+        return doSignup(full_name,email,password)
     except Exception as e:
         return jsonify({"error": f"Error getting the data: {str(e)}"}), 400
 
-    return doSignup(full_name,email,password)
 
