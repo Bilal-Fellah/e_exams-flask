@@ -1,10 +1,10 @@
-from flask import Flask, json, jsonify
+from flask import  json, jsonify
 
 
 
 
 # @app.route("/api/files", methods=["GET"])
-def get_files():
+def get_fields_modules():
     try:
         # Open and load the JSON file
         with open("api/data/fields-modules.json", "r") as file:
