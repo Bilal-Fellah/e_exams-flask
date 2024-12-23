@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from api.routes.getModulesFields import get_fields_modules
 from api.routes.getProfileInfo import getProfileInfo
+from api.routes.signup import doSignup
 app = Flask(__name__)
 
 @app.route('/')
@@ -21,6 +22,16 @@ def getFieldsModules():
 def getUser(user_id):
     return getProfileInfo(user_id)
 
+@app.route("/signup", methods=["POST"])
+def signup():
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    try:
+        data = request.get_json()
+        full_name = data.get("full_name")
+        email = data.get("email")
+        password = data.get("password")
+    except Exception as e:
+        return jsonify({"error": f"Error getting the data: {str(e)}"}), 500
+
+    return doSignup(full_name,email,password)
+
