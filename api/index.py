@@ -27,11 +27,14 @@ def signup():
 
     try:
         data = request.get_json()
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+        
         full_name = data.get("full_name")
         email = data.get("email")
         password = data.get("password")
     except Exception as e:
-        return jsonify({"error": f"Error getting the data: {str(e)}"}), 500
+        return jsonify({"error": f"Error getting the data: {str(e)}"}), 400
 
     return doSignup(full_name,email,password)
 
