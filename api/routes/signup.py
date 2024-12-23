@@ -20,13 +20,13 @@ def verify_password(password, hashed_password):
 
 
 def doSignup(full_name,email,password):
-     # Input validation
-        if not (full_name and email and password):
-            return jsonify({"error": "All fields are required"}), 400
-        if not is_valid_email(email):
-            return jsonify({"error": "Invalid email address"}), 400
-        if not is_valid_password(password):
-            return jsonify({"error": "Password must be at least 8 characters long and include a number"}), 400
+    # Input validation
+    if not (full_name and email and password):
+        return jsonify({"error": "All fields are required"}), 400
+    if not is_valid_email(email):
+        return jsonify({"error": "Invalid email address"}), 400
+    if not is_valid_password(password):
+        return jsonify({"error": "Password must be at least 8 characters long and include a number"}), 400
     try:
     
         # Hash the password
