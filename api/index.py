@@ -38,7 +38,7 @@ def signup():
         return jsonify({"error": f"Error getting the data: {str(e)}"}), 400
     
 
-@app.route("/signup", methods=["POST"])
+@app.route("/login", methods=["POST"])
 def login():
 
     try:
