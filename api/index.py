@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from api.routes.getModulesFields import get_fields_modules
 from api.routes.getProfileInfo import getProfileInfo
 from api.routes.signup import doSignup
+from api.routes.login import doLogin
 app = Flask(__name__)
 
 @app.route('/')

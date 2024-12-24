@@ -19,7 +19,7 @@ def verify_password(password, hashed_password):
 
 
 
-def doSignup(email,password):
+def doLogin(email,password):
     # Input validation
     if not ( email and password):
         return jsonify({"error": "All fields are required"}), 400
