@@ -70,6 +70,7 @@ def insert_data():
         #     return jsonify({"error": response['error']['message']}), 400
         
         # Return success response
-        return jsonify({"message": "Data inserted successfully!", "data": response['data']}), 201
+        # return jsonify({"message": "Data inserted successfully!", "data": response['data']}), 201
+        return jsonify({"message": "it is workiiiiiiiiing"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
