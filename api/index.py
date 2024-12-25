@@ -62,12 +62,12 @@ def insert_data():
         # Get data from the request
         data = request.json  # Expecting JSON payload
         
-        # Insert data into the Supabase table (replace 'your_table' with your table name)
-        response = supabase.table('Users').insert(data).execute()
+        # # Insert data into the Supabase table (replace 'your_table' with your table name)
+        # response = supabase.table('Users').insert(data).execute()
         
-        # Check for errors
-        if response.get('error'):
-            return jsonify({"error": response['error']['message']}), 400
+        # # Check for errors
+        # if response.get('error'):
+        #     return jsonify({"error": response['error']['message']}), 400
         
         # Return success response
         return jsonify({"message": "Data inserted successfully!", "data": response['data']}), 201
