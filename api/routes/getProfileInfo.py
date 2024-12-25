@@ -6,8 +6,8 @@ profiles = {
         "role": '3rd year CS student',
         "full_name": 'John Doe',
         "email": 'johndoe@example.com',
-        "value": '+1 234 567 890',
-        "linkedin": 'linkedin.com/in/johndoe',
+        # "value": '+1 234 567 890',
+        # "linkedin": 'linkedin.com/in/johndoe',
         "score": 250,
     },
     2: {
@@ -15,8 +15,8 @@ profiles = {
         "role": '2nd year IT student',
         "full_name": 'Jane Smith',
         "email": 'janesmith@example.com',
-        "value": '+1 987 654 321',
-        "linkedin": 'linkedin.com/in/janesmith',
+        # "ph": '+1 987 654 321',
+        # "linkedin": 'linkedin.com/in/janesmith',
         "score": 300,
     },
     # Add more profiles as needed
