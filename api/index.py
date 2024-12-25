@@ -3,7 +3,7 @@ from api.routes.getModulesFields import get_fields_modules
 from api.routes.getProfileInfo import getProfileInfo
 from api.routes.signup import doSignup
 from api.routes.login import doLogin
-from supabase.connection import supabase
+from api.routes.connection import supabase
 app = Flask(__name__)
 
 
