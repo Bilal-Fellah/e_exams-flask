@@ -43,7 +43,7 @@ def doSignup(full_name,email,password):
         # Insert data into the Supabase table
         response = supabase.table('Users').insert(user_data).execute()
         
-        return jsonify({"message": "Data inserted successfully!", "data": response.data}), 201
+        return  response.data, 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
        

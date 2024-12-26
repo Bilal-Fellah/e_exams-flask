@@ -16,12 +16,12 @@ def about():
     return 'FAFA, Abderrahmane JS'
 
 
-@app.route('/fields-modules.get')
+@app.route('/fields_modules.get')
 def getFieldsModules():
     return get_fields_modules()
 
 
-@app.route('/userInfo.get/<int:user_id>', methods=["GET"])
+@app.route('/user_info.get/<int:user_id>', methods=["GET"])
 def getUser(user_id):
     return getProfileInfo(user_id)
 
@@ -56,8 +56,10 @@ def login():
         return jsonify({"error": f"Error getting the data: {str(e)}"}), 400
 
 
-
+# @app.route("/update_user_score/<int:user_id>", methods=["POST"])
+# def update_score():
+#     try
 
     
-# if __name__ == "__main__":
-#     app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
