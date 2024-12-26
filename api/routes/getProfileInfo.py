@@ -14,7 +14,7 @@ def getProfileInfo(user_id):
         if not response.data or len(response.data) ==0:
             return jsonify({"error": "User not found"}), 404
 
-        return jsonify({"user": response.data[0]}), 200 
+        return jsonify( response.data[0]), 200 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
