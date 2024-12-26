@@ -43,7 +43,10 @@ def doSignup(full_name,email,password):
         # Insert data into the Supabase table
         response = supabase.table('Users').insert(user_data).execute()
         
-        return  response.data, 201
+        if hasattr(response, 'error'):
+            return jsonify({"error": f"Failed signup: {response.error}"}), 500
+        else:
+            return jsonify({"message": "signed up successfully!"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
        

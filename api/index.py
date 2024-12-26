@@ -3,6 +3,7 @@ from api.routes.getModulesFields import get_fields_modules
 from api.routes.getProfileInfo import getProfileInfo
 from api.routes.signup import doSignup
 from api.routes.login import doLogin
+from api.routes.updateScore import do_update_score
 from api.supabase.connection import supabase
 app = Flask(__name__)
 
@@ -56,10 +57,26 @@ def login():
         return jsonify({"error": f"Error getting the data: {str(e)}"}), 400
 
 
-# @app.route("/update_user_score/<int:user_id>", methods=["POST"])
-# def update_score():
-#     try
+@app.route("/update_user_score/<int:user_id>", methods=["POST"])
+def update_score(user_id):
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No data provided"})
+        score = data['score']
+        # return {"success":"asdfasdfjjjjjjj"}
+
+        return do_update_score(user_id, score)
+
+
+    except Exception as e: 
+        return jsonify({"error": f"Error getting the data: {str(e)}"}), 400
 
     
-if __name__ == "__main__":
-    app.run(debug=True)
+
+
+
+
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
