@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
+from api.routes.getExams import get_exams
 from api.routes.getModulesFields import get_fields_modules
 from api.routes.getProfileInfo import getProfileInfo
+from api.routes.insertExam import insert_exam
 from api.routes.signup import doSignup
 from api.routes.login import doLogin
 from api.routes.updateScore import do_update_score
@@ -73,10 +75,28 @@ def update_score(user_id):
         return jsonify({"error": f"Error getting the data: {str(e)}"}), 400
 
     
+@app.route("/get_exams/<string:field_name>/<string:module_name>")
+def getExams(field_name, module_name):
+    if not field_name or not module_name:
+            return jsonify({"error": "missing required parameters"}), 400 
+    
+    return get_exams(field_name, module_name)
+
+@app.route("/inser_exam/", methods=["POST"])
+def inserExam():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    if not all(key in data for key in ["field", "module", "user_id", "file_name", "description"]):
+        return jsonify({"error": "All data fields must be provided"}), 400
+
+
+    # return data
+    return insert_exam(data)
 
 
 
 
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
