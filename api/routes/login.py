@@ -1,6 +1,7 @@
 import bcrypt
 import re
 from flask import  jsonify
+from api.supabase.connection import supabase
 
 
 def is_valid_email(email):
@@ -30,22 +31,23 @@ def doLogin(email,password):
     try:
     
         # Hash the password
-        # password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-        # Save to database (use SQLAlchemy for better abstraction)
-        # connection = sqlite3.connect("users.db")  # Example SQLite database
-        # cursor = connection.cursor()
+        response = supabase.table('Users').select('*').eq('email', email).execute()
 
-        # try:
-        #     cursor.execute(
-        #         "INSERT INTO users ( email, password_hash) VALUES (?, ?, ?)",
-        #         ( email, password_hash),
-        #     )
-        #     connection.commit()
-        # except sqlite3.IntegrityError:  # Handle unique email constraint
-        #     return jsonify({"error": "Email already registered"}), 400
+        if not response.data or len(response.data) == 0:
+            return jsonify({"error": "Invalid email or user not found"}), 404
 
-        return jsonify({"message": "Signup successful"}), 201
-
+        user = response.data[0]
+        stored_password = user["password"]  # The hashed password stored in the database
+        if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
+            return jsonify({"message": "Login successful!", "user": {
+                "user_id": user["user_id"],
+                "full_name": user["full_name"],
+                "email": user["email"],
+                "score": user["score"]
+            }}), 200
+        else:
+            return jsonify({"error": "Invalid password"}), 401
     except Exception as e:
         return jsonify({"error": f"Internal Server Error: {str(e)}"}), 500

@@ -3,17 +3,17 @@ from api.routes.getModulesFields import get_fields_modules
 from api.routes.getProfileInfo import getProfileInfo
 from api.routes.signup import doSignup
 from api.routes.login import doLogin
-from api.routes.connection import supabase
+from api.supabase.connection import supabase
 app = Flask(__name__)
 
 
 @app.route('/')
 def home():
-    return 'Hello, World!'
+    return 'Hello, This is the flask backend for eexams project!'
 
 @app.route('/about')
 def about():
-    return 'About'
+    return 'FAFA, Abderrahmane JS'
 
 
 @app.route('/fields-modules.get')
@@ -56,25 +56,8 @@ def login():
         return jsonify({"error": f"Error getting the data: {str(e)}"}), 400
 
 
-@app.route('/add_user', methods=['POST'])
-def insert_data():
-    try:
-        # Get data from the request
-        data = request.json  # Expecting JSON payload
-        
-        # # Insert data into the Supabase table (replace 'your_table' with your table name)
-        # response = supabase.table('Users').insert(data).execute()
-        
-        # # Check for errors
-        # if response.get('error'):
-        #     return jsonify({"error": response['error']['message']}), 400
-        
-        # Return success response
-        # return jsonify({"message": "Data inserted successfully!", "data": response['data']}), 201
-        return jsonify({"message": "it is workiiiiiiiiing"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    
+
+
     
 if __name__ == "__main__":
     app.run(debug=True)
