@@ -82,17 +82,15 @@ def getExams(field_name, module_name):
     
     return get_exams(field_name, module_name)
 
+
+
 @app.route("/inser_exam/", methods=["POST"])
 def inserExam():
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
-    if not all(key in data for key in ["field", "module", "user_id", "file_name", "description"]):
-        return jsonify({"error": "All data fields must be provided"}), 400
-
-
-    # return data
-    return insert_exam(data)
+    # data = request.get_json()
+    # if not data:
+    #     return jsonify({"error": "No data provided"}), 400
+   
+    return insert_exam()
 
 
 

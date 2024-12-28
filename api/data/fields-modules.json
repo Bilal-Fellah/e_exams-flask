@@ -1,4 +1,105 @@
 {
+  "Math": {
+    "Algebra": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2021/2022",
+        "Description": "This exam is created by one of the proffesor of ESI to test students",
+        "Date": "20-12-2023"
+      },
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2022/2023",
+        "Description": "This exam is created by one of the proffesor of ESI to test students",
+        "Date": "20-12-2024"
+      }
+    ],
+    "Calculus": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2022/2023",
+        "Description": "This exam is created by another proffesor of ESI to test students",
+        "Date": "15-01-2024"
+      }
+    ],
+    "Probability": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2023/2024",
+        "Description": "This exam is created by a third proffesor of ESI to test students",
+        "Date": "20-02-2025"
+      }
+    ],
+    "Analysis": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2024/2025",
+        "Description": "This exam is created by a fourth proffesor of ESI to test students",
+        "Date": "15-03-2026"
+      }
+    ],
+    "Geometry": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2025/2026",
+        "Description": "This exam is created by a fifth proffesor of ESI to test students",
+        "Date": "20-04-2027"
+      }
+    ],
+    "Differential Equations": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2026/2027",
+        "Description": "This exam is created by a sixth proffesor of ESI to test students",
+        "Date": "15-05-2028"
+      }
+    ],
+    "Linear Algebra": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2027/2028",
+        "Description": "This exam is created by a seventh proffesor of ESI to test students",
+        "Date": "20-06-2029"
+      }
+    ]
+  },
+  "Medicine": {
+    "Pathology": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2021/2022",
+        "Description": "This exam is created by one of the proffesor of ESI to test students",
+        "Date": "15-02-2023"
+      }
+    ],
+    "Oncology": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2022/2023",
+        "Description": "This exam is created by another proffesor of ESI to test students",
+        "Date": "20-03-2024"
+      }
+    ]
+  },
+  "Politics": {
+    "Economics": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2021/2022",
+        "Description": "This exam is created by one of the proffesor of ESI to test students",
+        "Date": "10-04-2023"
+      }
+    ],
+    "International Relations": [
+      {
+        "Uploader": "Memmou Abderrahmane",
+        "Title": "Exam 2022/2023",
+        "Description": "This exam is created by another proffesor of ESI to test students***************************************************************************************************************************************************************************************************************************************************************************",
+        "Date": "15-05-2024"
+      }
+    ]
+  },
+
   "ComputerScience": [
     "Probability",
     "Calculus",
