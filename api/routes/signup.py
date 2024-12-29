@@ -48,5 +48,5 @@ def doSignup(full_name,email,password):
         else:
             return jsonify({"message": "signed up successfully!"}), 201
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({e}), 500
        
