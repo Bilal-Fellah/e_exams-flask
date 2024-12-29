@@ -8,7 +8,7 @@ def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
 def is_valid_password(password):
-    return len(password) >= 8 and any(char.isdigit() for char in password)
+    return len(password) >= 6 
 
 def hash_password(password):
     salt = bcrypt.gensalt()
@@ -44,7 +44,7 @@ def doSignup(full_name,email,password):
         response = supabase.table('Users').insert(user_data).execute()
         
         if hasattr(response, 'error'):
-            return jsonify({"error": f"Failed signup: {response.error}"}), 500
+            return jsonify({"error": f"Failed signup"}), 500
         else:
             return jsonify({"message": "signed up successfully!"}), 201
     except Exception as e:
