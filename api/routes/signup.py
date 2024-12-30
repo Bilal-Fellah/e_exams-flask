@@ -17,18 +17,21 @@ def hash_password(password):
 def verify_password(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
+def is_valid_name(name):
+    return len(name) <= 30
 
 
 
 def doSignup(full_name,email,password):
     # Input validation
-    # if not (full_name and email and password):
-    #     return jsonify({"error": "All fields are required"}), 400
-    # if not is_valid_email(email):
-    #     return jsonify({"error": "Invalid email address"}), 400
-    # if not is_valid_password(password):
-    #     return jsonify({"error": "Password must be at least 8 characters long and include a number"}), 400
-
+    if not (full_name and email and password):
+        return jsonify({"error": "All fields are required"}), 400
+    if not is_valid_email(email):
+        return jsonify({"error": "Invalid email address"}), 400
+    if not is_valid_password(password):
+        return jsonify({"error": "Password must be at least 6 characters long "}), 400
+    if not is_valid_name(full_name):
+        return jsonify({"error": "name must be at max 30 characters long"})
     try:
         
         password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -48,5 +51,7 @@ def doSignup(full_name,email,password):
         else:
             return jsonify({"message": "signed up successfully!"}), 201
     except Exception as e:
-        return Response(str(e), status=500, mimetype='application/json')
+        print(e.message)
+        return jsonify({"error": f"Internal server error: {str(e.message)}"}), 500
+        # return Response(str(e), status=500, mimetype='application/json')
        

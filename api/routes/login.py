@@ -8,7 +8,7 @@ def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
 def is_valid_password(password):
-    return len(password) >= 8 and any(char.isdigit() for char in password)
+    return len(password) >= 6
 
 def hash_password(password):
     salt = bcrypt.gensalt()
@@ -27,7 +27,7 @@ def doLogin(email,password):
     if not is_valid_email(email):
         return jsonify({"error": "Invalid email address"}), 400
     if not is_valid_password(password):
-        return jsonify({"error": "Password must be at least 8 characters long and include a number"}), 400
+        return jsonify({"error": "Password must be at least 6 characters long "}), 400
     try:
     
         # Hash the password
