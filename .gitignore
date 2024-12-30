@@ -3,6 +3,7 @@
 *.pyc
 __pycache__
 api/supabase/connection.py
+files/
 # Environments 
 .env 
 .venv 

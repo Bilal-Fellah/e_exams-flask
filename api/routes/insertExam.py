@@ -1,4 +1,5 @@
 import os
+import time
 from flask import jsonify, request, json
 from api.supabase.connection import supabase
 import logging	
@@ -13,11 +14,16 @@ def allowed_file(filename):
 
 def insert_exam():
     try:
+        # Create the directory if it doesn't exist
+        if not os.path.exists(UPLOAD_FOLDER):
+            os.makedirs(UPLOAD_FOLDER)
+        
+        
         
         # print("Headers:", request.headers)
         # print("Form Data:", request.form)  # For form-data
         # # print("JSON Data:", request.get_json())  # For raw JSON
-        # print("Files:", request.files)  # For uploaded files
+        print("Files:", request.files)  # For uploaded files
         # return jsonify({"message": "Debugging complete"}), 200
         
         
@@ -49,9 +55,8 @@ def insert_exam():
             return jsonify({"error": "File type not allowed"}), 400
 
 
-
         # Generate unique file name and save locally
-        unique_file_name = f"{user_id}_{uploaded_file.filename}"
+        unique_file_name = f"{user_id}_{int(time.time())}_{uploaded_file.filename}"
         file_path = os.path.join(UPLOAD_FOLDER, unique_file_name)
         uploaded_file.save(file_path)
         
@@ -59,7 +64,14 @@ def insert_exam():
 
         # Upload to Supabase
         try:
-            supabase.storage.from_("files").upload(file_path, file_path)
+            with open(file_path, 'rb') as f:
+                response = supabase.storage.from_("files").upload(
+                    file=f,
+                    path=f"{unique_file_name}",
+                    file_options={"cache-control": "3600", "upsert": "false"},
+                )
+
+            # supabase.storage.from_("files").upload(file_path, file_path)
         except Exception as e:
             return jsonify({"error": f"Failed to upload to Supabase: {e}"}), 500
 

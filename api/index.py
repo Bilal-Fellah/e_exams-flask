@@ -84,13 +84,11 @@ def getExams(field_name, module_name):
 
 
 
-@app.route("/inser_exam/", methods=["POST"])
-def inserExam():
-    # data = request.get_json()
-    # if not data:
-    #     return jsonify({"error": "No data provided"}), 400
-   
+@app.route("/insert_exam/", methods=["POST"])
+def inserExam():  
     return insert_exam()
+
+
 
 
 
