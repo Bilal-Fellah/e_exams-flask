@@ -1,7 +1,7 @@
 import os
 import time
-from flask import jsonify, request, json
-from api.supabase.connection import supabase
+from flask import jsonify, request
+from api.supabase.connection import supabase, url
 import logging	
 logging.basicConfig(level=logging.ERROR)
 
@@ -14,20 +14,17 @@ def allowed_file(filename):
 
 def insert_exam():
     try:
+        
+         # Validate required fields
+        required_fields = ["title", "is_solution", "field", "module", "user_id", "description"]
+        if not all(request.form.get(field) for field in required_fields):
+            return jsonify({"error": "Missing required fields"}), 400
+
         # Create the directory if it doesn't exist
         if not os.path.exists(UPLOAD_FOLDER):
             os.makedirs(UPLOAD_FOLDER)
         
-        
-        
-        # print("Headers:", request.headers)
-        # print("Form Data:", request.form)  # For form-data
-        # # print("JSON Data:", request.get_json())  # For raw JSON
-        print("Files:", request.files)  # For uploaded files
-        # return jsonify({"message": "Debugging complete"}), 200
-        
-        
-        
+
         # Parse form fields
         title = request.form.get("title")
         is_solution = request.form.get("is_solution")
@@ -37,11 +34,7 @@ def insert_exam():
         user_id = request.form.get("user_id")
         description = request.form.get("description")
 
-        # Validate required fields
-        required_fields = ["title", "is_solution", "solution_to", "field", "module", "user_id", "description"]
-        if not all(request.form.get(field) for field in required_fields):
-            return jsonify({"error": "Missing required fields"}), 400
-
+       
         # Check for the file in the request
         if "file" not in request.files:
             return jsonify({"error": "File is required"}), 400
@@ -54,28 +47,14 @@ def insert_exam():
         if not allowed_file(uploaded_file.filename):
             return jsonify({"error": "File type not allowed"}), 400
 
-
         # Generate unique file name and save locally
         unique_file_name = f"{user_id}_{int(time.time())}_{uploaded_file.filename}"
         file_path = os.path.join(UPLOAD_FOLDER, unique_file_name)
         uploaded_file.save(file_path)
-        
-        
 
-        # Upload to Supabase
-        try:
-            with open(file_path, 'rb') as f:
-                response = supabase.storage.from_("files").upload(
-                    file=f,
-                    path=f"{unique_file_name}",
-                    file_options={"cache-control": "3600", "upsert": "false"},
-                )
-
-            # supabase.storage.from_("files").upload(file_path, file_path)
-        except Exception as e:
-            return jsonify({"error": f"Failed to upload to Supabase: {e}"}), 500
-
+       
         # Prepare file metadata for database
+        
         file_data = {
             "field": field,
             "module": module,
@@ -85,18 +64,17 @@ def insert_exam():
             "is_solution": is_solution,
             "solution_to": solution_to,
             "file_name": unique_file_name,
-            "file_url": f"{supabase.storage.url}/{file_path}",
         }
 
         # Insert into the database
-        response = supabase.table("UploadedFiles").insert(file_data).execute()
-        if response.get("error"):
-            return jsonify({"error": f"Failed to upload file metadata: {response['error']}"}), 500
+        db_response = supabase.table("UploadedFiles").insert(file_data).execute()
+        if hasattr(db_response, 'error'):
+            return jsonify({"error": f"Failed to upload file metadata: {db_response.error}"}), 500
 
-        # Clean up temporary file
-        os.remove(file_path)
+        # Clean up temporary file ------- but not now
+        # os.remove(file_path)
 
-        return jsonify({"message": f"File {unique_file_name} uploaded successfully!"}), 201
+        return jsonify({"message": f"File {unique_file_name} uploaded successfully! {db_response}"}), 201
 
     except Exception as e:
         logging.error(f"An error occurred: {e}")
