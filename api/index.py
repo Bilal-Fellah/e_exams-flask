@@ -9,7 +9,11 @@ from api.routes.login import doLogin
 from api.routes.updateScore import do_update_score
 from api.supabase.connection import supabase
 import os
+
+
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Set max upload size to 16 MB
+
 
 
 @app.route('/')
