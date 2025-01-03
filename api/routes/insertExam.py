@@ -52,6 +52,12 @@ def insert_exam():
         file_path = os.path.join(UPLOAD_FOLDER, unique_file_name)
         uploaded_file.save(file_path)
 
+        with open(file_path, 'rb') as f:
+            response = supabase.storage.from_("files").upload(
+                file=f,
+                path=f"exams/{unique_file_name}",
+                file_options={"cache-control": "3600", "upsert": "false"},
+            )
        
         # Prepare file metadata for database
         

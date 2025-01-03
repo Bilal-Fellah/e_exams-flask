@@ -12,7 +12,7 @@ import os
 
 
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Set max upload size to 16 MB
+app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024  # Set max upload size to 16 MB
 
 
 
@@ -113,6 +113,13 @@ def download_file(file_id):
 
         # Construct file path
         file_path = os.path.join(UPLOAD_FOLDER, file_name)
+        
+        with open(file_path, "wb+") as f:
+            response = supabase.storage.from_("files").download(
+                f"exams/{file_name}"
+            )
+            f.write(response)
+
 
         # Check if the file exists in the UPLOAD_FOLDER
         if not os.path.exists(file_path):
