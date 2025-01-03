@@ -122,7 +122,7 @@ def download_file(file_id):
 
         # Create a response object to stream the file
         return Response(
-            response.data,  # This is the binary file data
+            response,  # This is the binary file data
             mimetype="application/pdf",  # Adjust the MIME type if necessary
             headers={
                 "Content-Disposition": f"attachment; filename={file_name}"
