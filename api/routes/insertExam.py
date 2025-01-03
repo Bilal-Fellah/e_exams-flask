@@ -20,9 +20,9 @@ def insert_exam():
         if not all(request.form.get(field) for field in required_fields):
             return jsonify({"error": "Missing required fields"}), 400
 
-        # Create the directory if it doesn't exist
-        if not os.path.exists(UPLOAD_FOLDER):
-            os.makedirs(UPLOAD_FOLDER)
+        # # Create the directory if it doesn't exist
+        # if not os.path.exists(UPLOAD_FOLDER):
+        #     os.makedirs(UPLOAD_FOLDER)
         
 
         # Parse form fields
