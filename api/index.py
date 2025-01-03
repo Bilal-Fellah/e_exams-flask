@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, request, jsonify, send_from_directory, send_file
+from flask import Flask, Response, request, jsonify, send_from_directory, send_file
 from api.routes.getExams import get_exams
 from api.routes.getModulesFields import get_fields_and_modules
 from api.routes.getProfileInfo import getProfileInfo
@@ -112,22 +112,22 @@ def download_file(file_id):
         file_name = file_data[0]["file_name"]
 
         # Construct file path
-        file_path = os.path.join(UPLOAD_FOLDER, file_name)
+        # file_path = os.path.join(UPLOAD_FOLDER, file_name)
         
-        with open(file_path, "wb+") as f:
-            response = supabase.storage.from_("files").download(
-                f"exams/{file_name}"
-            )
-            f.write(response)
+        # Download the file from Supabase
+        response = supabase.storage.from_("files").download(f"exams/{file_name}")
+        
+        if not response:
+            return jsonify({"error": "File not found in Supabase"}), 404
 
-
-        # Check if the file exists in the UPLOAD_FOLDER
-        if not os.path.exists(file_path):
-            return jsonify({"error": "File not found on the server"}), 404
-
-        # Send the file to the client
-        return send_from_directory(UPLOAD_FOLDER, file_name, as_attachment=True)
-
+        # Create a response object to stream the file
+        return Response(
+            response.data,  # This is the binary file data
+            mimetype="application/pdf",  # Adjust the MIME type if necessary
+            headers={
+                "Content-Disposition": f"attachment; filename={file_name}"
+            }
+        )
     except Exception as e:
         logging.error(f"An error occurred while downloading the file: {e}")
         return jsonify({"error": str(e)}), 500
