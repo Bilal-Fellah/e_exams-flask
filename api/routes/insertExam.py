@@ -49,18 +49,19 @@ def insert_exam():
 
         # Generate unique file name and save locally
         unique_file_name = f"{user_id}_{int(time.time())}_{uploaded_file.filename}"
-        file_path = os.path.join(UPLOAD_FOLDER, unique_file_name)
-        uploaded_file.save(file_path)
+        # file_path = os.path.join(UPLOAD_FOLDER, unique_file_name)
+        # uploaded_file.save(file_path)
+        file_content = uploaded_file.read()
 
-        with open(file_path, 'rb') as f:
-            response = supabase.storage.from_("files").upload(
-                file=f,
-                path=f"exams/{unique_file_name}",
-                file_options={"cache-control": "3600", "upsert": "false"},
-            )
+        
+        response = supabase.storage.from_("files").upload(
+            file=file_content,
+            path=f"exams/{unique_file_name}",
+            file_options={"cache-control": "3600", "upsert": "false"},
+        )
         
         if hasattr(response, 'error'):
-            return jsonify({"error": f"error from supabase {str(response.error)}"})
+            return jsonify({"error": f"error from supabase {str(response.error)}"}), 500
        
         # Prepare file metadata for database
         
