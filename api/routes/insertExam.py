@@ -58,6 +58,9 @@ def insert_exam():
                 path=f"exams/{unique_file_name}",
                 file_options={"cache-control": "3600", "upsert": "false"},
             )
+        
+        if hasattr(response, 'error'):
+            return jsonify({"error": f"error from supabase {str(response.error)}"})
        
         # Prepare file metadata for database
         
