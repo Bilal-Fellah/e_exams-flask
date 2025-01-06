@@ -37,7 +37,6 @@ def getUser(user_id):
 @app.route("/signup", methods=["POST"])
 def signup():
     data = request.get_json()
-    print(data)
     try:
         if not data:
             return jsonify({"error": "No data provided"}), 400
@@ -47,7 +46,7 @@ def signup():
         password = data.get("password")
         return doSignup(full_name,email,password)
     except Exception as e:
-        return jsonify({"error": f"Error getting the data:{str(e)}"}), 400
+        return jsonify({"error": f"Exception when getting the data or when resolving another exeption:{str(e)}"}), 400
     
 
 @app.route("/login", methods=["POST"])
