@@ -46,23 +46,12 @@ def doSignup(full_name,email,password):
         # Insert data into the Supabase table
         response = supabase.table('Users').insert(user_data).execute()
         print(response)
-        if isinstance(response, set):
+        
+        if getattr(response, 'data') and not isinstance(response, list):
             # Convert the set to a list
-            response = list(response)        
-        return jsonify(response), 201  # HTTP status code 200 for success
-        # # Handle response
-        # if getattr(response, "data", None):  # Successful insertion
-        #     return jsonify({"message": "Signed up successfully!"}), 201
-
-        # elif getattr(response, "error", None):  # Error case
-        #     return jsonify({"error": f"Failed signup: {response.error.message}"}), 500
-
-        # else:  # Unexpected case (neither data nor error)
-        #     return jsonify({"error": "Unexpected response from the server"}), 500
-        # if response.error:
-        # return jsonify(str(response)), 500
-        # else:
-        #     return jsonify({"message": "signed up successfully!"}), 201
+            response = list(response.data)        
+        return jsonify(response), 201 
+       
     except Exception as e:
         # Handle Supabase error response
         if isinstance(e, dict):  # Supabase error is typically a dictionary
