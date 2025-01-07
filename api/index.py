@@ -1,7 +1,8 @@
 import logging
 from flask import Flask, Response, request, jsonify, send_from_directory, send_file
 from api.routes.getExams import get_exams
-from api.routes.getModulesFields import get_fields_and_modules
+# from api.routes.getModulesFields import get_fields_and_modules
+from api.routes.getModulesFieldsJson import get_fields_and_modules_json
 from api.routes.getProfileInfo import getProfileInfo
 from api.routes.insertExam import insert_exam
 from api.routes.signup import doSignup
@@ -27,7 +28,7 @@ def about():
 
 @app.route('/fields_modules.get')
 def getFieldsModules():
-    return get_fields_and_modules()
+    return get_fields_and_modules_json()
 
 
 @app.route('/user_info.get/<int:user_id>', methods=["GET"])
