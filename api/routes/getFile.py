@@ -8,7 +8,7 @@ def get_file(file_id):
         db_response = supabase.table("UploadedFiles").select("*").eq("file_id", file_id).execute()
 
         # Access the 'data' attribute of the response
-        file_data = db_response.data  
+        file_data = db_response.data  # Use `.data` instead of `.get("data")`
 
         # Check if the file data exists
         if not file_data:

@@ -11,6 +11,7 @@ def get_exams(field_name, module_name):
             '*, Users(full_name, score)'  # Fetch all fields from UploadedFiles and the username from Users table
         ).eq('field', field_name).eq('module', module_name).execute()
         
+        print(response)
         if hasattr(response, 'error') and response.error:
             return jsonify({"error": f"An error occurred when getting the exams: {response.error}"}), 500
         elif not response.data:
