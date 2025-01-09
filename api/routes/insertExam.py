@@ -70,7 +70,7 @@ def insert_exam():
                     "description": description,
                     "file_name": solution_unique_name,
                     "is_solution": True,
-                    "solution_to": None,  # This will be None if no solution file was provided
+                    "solution_id": None,  # This will be None if no solution file was provided
                 }
 
                 # Insert metadata into the database
@@ -116,7 +116,7 @@ def insert_exam():
             "description": description,
             "file_name": exam_unique_name,
             "is_solution": False,
-            "solution_to": solution_id,  # This will be None if no solution file was provided
+            "solution_id": solution_id,  # This will be None if no solution file was provided
         }
 
         # Insert metadata into the database
