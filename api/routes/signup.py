@@ -44,8 +44,10 @@ def doSignup(full_name,email,password):
             "score": 0  # Add default score
         }
         # Insert data into the Supabase table
+        
         response = supabase.table('Users').insert(user_data).execute()
-        print(response)
+        print("we reached here")
+        # print(response)
         
         if getattr(response, 'data') and not isinstance(response, list):
             # Convert the set to a list

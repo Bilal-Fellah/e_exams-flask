@@ -53,7 +53,7 @@ def insert_exam():
                 solution_upload_response = supabase.storage.from_("files").upload(
                     path=f"solutions/{solution_unique_name}",
                     file=solution_file_content,
-                    file_options={"cache-control": "3600", "upsert": "false"},
+                    file_options={"cache-control": "3600", "upsert": False},
                 )
                 
                 print("after uploaidng to the storage")
@@ -101,7 +101,7 @@ def insert_exam():
         exam_upload_response = supabase.storage.from_("files").upload(
             path=f"exams/{exam_unique_name}",
             file=exam_file_content,
-            file_options={"cache-control": "3600", "upsert": "false"},
+            file_options={"cache-control": "3600", "upsert": False},
         )
         if hasattr(exam_upload_response, 'error'):
             return jsonify({"error": f"Error uploading exam file: {exam_upload_response.error}"}), 500
