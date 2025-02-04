@@ -54,7 +54,7 @@ def insert_exam():
                 # Upload solution file to Supabase storage
                 solution_upload_response = supabase.storage.from_("files").upload(
                     path=f"solutions/{solution_unique_name}",
-                    file=io.BytesIO(solution_file_content),  # Wrap bytes in BytesIO
+                    file=solution_file_content,  # Wrap bytes in BytesIO
                     file_options={"cache-control": "3600", "upsert": "false"},  # Ensure correct format
                 )
                 
@@ -104,7 +104,7 @@ def insert_exam():
         # Upload exam file to Supabase storage
         exam_upload_response = supabase.storage.from_("files").upload(
             path=f"exams/{exam_unique_name}",
-            file= io.BytesIO( exam_file_content),
+            file=  exam_file_content,
             file_options={"cache-control": "3600", "upsert": "false"},
         )
         if hasattr(exam_upload_response, 'error'):
