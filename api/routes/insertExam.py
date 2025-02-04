@@ -54,8 +54,8 @@ def insert_exam():
                 # Upload solution file to Supabase storage
                 solution_upload_response = supabase.storage.from_("files").upload(
                     path=f"solutions/{solution_unique_name}",
-                    file=solution_file_content,
-                    file_options={"cache-control": "3600", "upsert": False},
+                    file=io.BytesIO(solution_file_content),  # Wrap bytes in BytesIO
+                    file_options={"cache-control": "3600", "upsert": "false"},  # Ensure correct format
                 )
                 
                 print("after uploaidng to the storage")
@@ -82,11 +82,7 @@ def insert_exam():
                 if hasattr(db_response, 'error'):
                     return jsonify({"error": f"Failed to upload file metadata: {db_response.error}"}), 500
                 
-                solution_upload_response = supabase.storage.from_("files").upload(
-                    path=f"solutions/{solution_unique_name}",
-                    file=io.BytesIO(solution_file_content),  # Wrap bytes in BytesIO
-                    file_options={"cache-control": "3600", "upsert": "false"},  # Ensure correct format
-                )
+                
 
         print(solution_id)
 
@@ -109,7 +105,7 @@ def insert_exam():
         exam_upload_response = supabase.storage.from_("files").upload(
             path=f"exams/{exam_unique_name}",
             file= io.BytesIO( exam_file_content),
-            file_options={"cache-control": "3600", "upsert": False},
+            file_options={"cache-control": "3600", "upsert": "false"},
         )
         if hasattr(exam_upload_response, 'error'):
             return jsonify({"error": f"Error uploading exam file: {exam_upload_response.error}"}), 500
