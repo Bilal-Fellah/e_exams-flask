@@ -1,6 +1,8 @@
 import os
 import time
 from datetime import datetime
+import io  # Import this at the top
+
 
 from flask import jsonify, request
 from api.supabase.connection import supabase, url
@@ -79,6 +81,12 @@ def insert_exam():
                 solution_id = db_response.data[0]["file_id"]
                 if hasattr(db_response, 'error'):
                     return jsonify({"error": f"Failed to upload file metadata: {db_response.error}"}), 500
+                
+                solution_upload_response = supabase.storage.from_("files").upload(
+                    path=f"solutions/{solution_unique_name}",
+                    file=io.BytesIO(solution_file_content),  # Wrap bytes in BytesIO
+                    file_options={"cache-control": "3600", "upsert": "false"},  # Ensure correct format
+                )
 
         print(solution_id)
 
@@ -100,7 +108,7 @@ def insert_exam():
         # Upload exam file to Supabase storage
         exam_upload_response = supabase.storage.from_("files").upload(
             path=f"exams/{exam_unique_name}",
-            file=exam_file_content,
+            file= io.BytesIO( exam_file_content),
             file_options={"cache-control": "3600", "upsert": False},
         )
         if hasattr(exam_upload_response, 'error'):
