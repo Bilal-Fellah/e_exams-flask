@@ -9,7 +9,7 @@ def get_exams(field_name, module_name):
         
         # Use Supabase join to fetch the username from Users table
         response = supabase.table('UploadedFiles').select(
-            '*, Users(full_name, score)').eq('field', field_name).eq('module', module_name).execute()
+            '*, Users(full_name, score)').eq('field', field_name).eq('module', module_name).eq('is_solution', False).execute()
         
         print(response)
         if hasattr(response, 'error') and response.error:
