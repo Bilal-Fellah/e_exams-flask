@@ -1,10 +1,11 @@
 from flask import jsonify
 from api.supabase.connection import supabase
+from urllib.parse import unquote
 
 def get_exams(field_name, module_name):
     try:
-        field_name = str(field_name).lower()
-        module_name = str(module_name).lower()
+        field_name =  unquote(str(field_name).lower())
+        module_name = unquote(str(module_name).lower())
         
         # Use Supabase join to fetch the username from Users table
         response = supabase.table('UploadedFiles').select(
