@@ -8,7 +8,9 @@ def get_file(file_id):
         db_response = supabase.table("UploadedFiles").select("*").eq("file_id", file_id).execute()
 
         # Access the 'data' attribute of the response
+        print('goood here')
         file_data = db_response.data  # Use `.data` instead of `.get("data")`
+        print('goood here')
 
         # Check if the file data exists
         if not file_data:
@@ -16,12 +18,16 @@ def get_file(file_id):
 
         # Extract file metadata (assuming the first entry is the desired file)
         file_name = file_data[0]["file_name"]
+        print(file_name)
 
         # Construct file path
         # file_path = os.path.join(UPLOAD_FOLDER, file_name)
         
+        bucket_name = "solutions" if file_data[0]["is_solution"] else "exams"
+        
         # Download the file from Supabase
-        response = supabase.storage.from_("files").download(f"exams/{file_name}")
+        response = supabase.storage.from_("files").download(f"{bucket_name}/{file_name}")
+        print('goood here')
         
         if not response:
             return jsonify({"error": "File not found in Supabase"}), 404
